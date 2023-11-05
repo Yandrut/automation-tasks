@@ -1,11 +1,12 @@
 package org.yandrut;
 
 import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.openqa.selenium.WebDriver;
 import static junit.framework.Assert.*;
 
 public class EpamUiTesting {
-    HomePage page = new HomePage();
+    WebDriver driver = DriverFactory.getInstance();
+    HomePage page = new HomePage(driver);
 
     @Test
     public void titleComparison() {
@@ -15,12 +16,16 @@ public class EpamUiTesting {
     }
 
     @Test
-    public void lightThemeChange() {
-        assertAll(() -> page.changeToLightTheme());
+    public void lightThemeChanged() {
+        String expected = "fonts-loaded header--animated dark-mode";
+        String actual = page.getBackgroundColourAttribute();
+        assertNotSame(expected, actual);
     }
 
     @Test
     public void languageChanged() {
-        assertAll(() -> page.changeLanguageToUA());
+        String expected = "EPAM Ukraine - найбільша ІТ-компанія в Україні | Вакансії";
+        String actual = page.getUkrainianTitle();
+        assertEquals(expected, actual);
     }
 }
