@@ -1,14 +1,14 @@
 package org.yandrut;
 
-import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
+import org.testng.annotations.Test;
 import static junit.framework.Assert.*;
 
 public class EpamUiTesting {
-    HomePage page;
+    public HomePage page;
+    public WebDriver driver;
 
     @BeforeMethod
     public void openBrowser() {
@@ -17,6 +17,13 @@ public class EpamUiTesting {
         driver.get("https://epam.com");
         driver.manage().window().maximize();
     }
+
+    @AfterMethod
+    public void closeAndQuit() {
+        driver.close();
+        driver.quit();
+    }
+
     @Test
     public void titleComparison() {
         String actual = page.getTitle();
@@ -36,10 +43,5 @@ public class EpamUiTesting {
         String expected = "EPAM Ukraine - найбільша ІТ-компанія в Україні | Вакансії";
         String actual = page.getUkrainianTitle();
         assertEquals(expected, actual);
-    }
-
-    @AfterMethod
-    public void closeAndQuit() {
-
     }
 }
