@@ -9,8 +9,6 @@ public class HomePage {
 
     public HomePage (WebDriver driver) {
         this.driver = driver;
-        driver.get("https://epam.com");
-        driver.manage().window().maximize();
     }
     public static void main(String[] args) {
         // invoking methods
