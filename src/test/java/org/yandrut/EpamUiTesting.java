@@ -12,15 +12,14 @@ public class EpamUiTesting {
 
     @BeforeMethod
     public void openBrowser() {
-        WebDriver driver = DriverFactory.getInstance();
+        driver = DriverFactory.getInstance();
         page = new HomePage(driver);
         driver.get("https://epam.com");
         driver.manage().window().maximize();
     }
 
     @AfterMethod
-    public void closeAndQuit() {
-        driver.close();
+    public void closeBrowser() {
         driver.quit();
     }
 

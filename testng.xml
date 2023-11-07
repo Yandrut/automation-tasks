@@ -3,7 +3,13 @@
 <suite name="Practice">
     <test name="EpamUI">
         <classes>
-            <class name="org.yandrut.EpamUiTesting" />
+            <class name="org.yandrut.EpamUiTesting">
+                <methods>
+                    <include name="titleComparison"/>
+                    <include name="lightThemeChanged"/>
+                    <include name="languageChanged"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
