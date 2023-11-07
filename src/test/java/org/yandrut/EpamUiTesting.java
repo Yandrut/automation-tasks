@@ -20,7 +20,7 @@ public class EpamUiTesting {
 
     @AfterMethod
     public void closeBrowser() {
-        driver.quit();
+        DriverFactory.closeBrowser();
     }
 
     @Test
