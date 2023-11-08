@@ -10,7 +10,8 @@ public class EpamUiTesting {
     public HomePage page;
     public WebDriver driver;
 
-    @BeforeMethod
+          // invoking methods
+  @BeforeMethod
     public void openBrowser() {
         driver = DriverFactory.getInstance();
         page = new HomePage(driver);
@@ -42,5 +43,10 @@ public class EpamUiTesting {
         String expected = "EPAM Ukraine - найбільша ІТ-компанія в Україні | Вакансії";
         String actual = page.getUkrainianTitle();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void elementsPresent() {
+        assertTrue(page.elementsPresent());
     }
 }

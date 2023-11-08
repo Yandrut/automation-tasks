@@ -17,5 +17,6 @@ public class DriverFactory {
 
     public static void closeBrowser() {
         driver.quit();
+        driver = null;
     }
 }
