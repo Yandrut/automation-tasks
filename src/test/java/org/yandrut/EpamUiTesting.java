@@ -4,6 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
 import static junit.framework.Assert.*;
 
 public class EpamUiTesting {
@@ -46,7 +50,23 @@ public class EpamUiTesting {
     }
 
     @Test
-    public void elementsPresent() {
-        assertTrue(page.elementsPresent());
+    public void policiesItemsPresent() {
+        List<String> expected = Arrays.asList("INVESTORS",
+                "OPEN SOURCE", "PRIVACY POLICY", "COOKIE POLICY",
+                "APPLICANT PRIVACY NOTICE", "WEB ACCESSIBILITY");
+        List<String> actual = page.getPoliciesList();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void locationsItemsPresent() {
+      List <String> expected = Arrays.asList("AMERICAS", "EMEA", "APAC");
+      List <String> actual = page.getLocationsList();
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    public void searchResultsDisplayed() {
+      assertTrue(page.isResultPresent());
     }
 }

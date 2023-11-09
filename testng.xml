@@ -8,7 +8,8 @@
                     <include name="titleComparison"/>
                     <include name="lightThemeChanged"/>
                     <include name="languageChanged"/>
-                    <include name="elementsPresent"/>
+                    <include name="policiesItemsPresent"/>
+                    <include name="searchResultsDisplayed"/>
                 </methods>
             </class>
         </classes>

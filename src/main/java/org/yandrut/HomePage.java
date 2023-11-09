@@ -1,10 +1,11 @@
 package org.yandrut;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import java.util.List;
-import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class HomePage {
     WebDriver driver;
@@ -12,6 +13,7 @@ public class HomePage {
     public HomePage (WebDriver driver) {
         this.driver = driver;
     }
+
     public static void main(String[] args) {
         // invoking methods
     }
@@ -28,28 +30,32 @@ public class HomePage {
     }
 
     public String getUkrainianTitle() {
-        WebElement languageOptions = driver.findElement(By.xpath("//button[@class='location-selector__button']"));
+        WebElement languageOptions = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[2]/div[1]/header/div/div/ul/li[2]/div/div/button"));
         languageOptions.click();
         WebElement selector = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[2]/div[1]/header/div/div/ul/li[2]/div/nav/ul/li[6]/a"));
         selector.click();
         return driver.getTitle();
     }
-    public boolean elementsPresent() {
-          WebElement investors = driver.findElement(By.xpath("//a[text()='INVESTORS']"));
-          WebElement cookiePolicy = driver.findElement(By.xpath("//a[text()='COOKIE POLICY']"));
-          WebElement openSource = driver.findElement(By.xpath("//a[text()='OPEN SOURCE']"));
-          WebElement privacyNotice = driver.findElement(By.xpath("//a[text()='APPLICANT PRIVACY NOTICE']"));
-          WebElement privacyPolicy = driver.findElement(By.xpath("//a[text()='PRIVACY POLICY']"));
-          WebElement webAccessibility = driver.findElement(By.xpath("//a[text()='WEB ACCESSIBILITY']"));
 
-          List<WebElement> policyList = Arrays.asList(investors,cookiePolicy,openSource,privacyPolicy,privacyNotice,webAccessibility);
-          int flag = 0;
-          for (WebElement element : policyList) {
-              if (element.isEnabled()) {
-                  flag++;
-              }
-          }
-        return flag == policyList.size();
+    public List<String> getPoliciesList() {
+         List <WebElement> policies = driver.findElements(By.xpath("//div[@class='policies']//a"));
+        return policies.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
+    public List<String> getLocationsList() {
+        List <WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper open']//a"));
+        return locations.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    public boolean isResultPresent() {
+        WebElement searchIcon = driver.findElement(By.xpath("//div[@class='header-search-ui header-search-ui-23 header__control']"));
+        searchIcon.click();
+        WebElement input = driver.findElement(By.xpath("//input[@id='new_form_search']"));
+        input.sendKeys("AI", Keys.ENTER);
+        WebElement searchResult = driver.findElement(By.xpath("//h2[@tabindex='0']"));
+
+        //if attribute contains "hidden", no results are displayed
+        String noResultsPresent = "search-results__counter hidden";
+        return (!searchResult.getAttribute("class").equals(noResultsPresent));
+    }
 }
