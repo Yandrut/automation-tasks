@@ -43,10 +43,16 @@ public class HomePage {
             return locations.stream().map(WebElement::getText).collect(Collectors.toList());
     }
     public void switchLocations() {
+        // List <WebElement> locations = driver.findElements(By.xpath("//a[@aria-selected='false']"));
+        // List <WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__title js-tabs-title']"));
+        // List <WebElement> locations = driver.findElements(By.xpath("//a[@aria-selected='false']/.."));
         List <WebElement> locations = driver.findElements(By.cssSelector(".tabs-23__link.js-tabs-link:not(.active)"));
-        for (WebElement element : locations) {
-            System.out.println(element.getText());
+
+        for (WebElement location : locations) {
+            System.out.println(location.getText());
+            location.click();
         }
+
     }
 
     public boolean isResultPresent() {
