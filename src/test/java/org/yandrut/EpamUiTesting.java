@@ -1,5 +1,6 @@
 package org.yandrut;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -63,6 +64,11 @@ public class EpamUiTesting {
       List <String> expected = Arrays.asList("AMERICAS", "EMEA", "APAC");
       List <String> actual = page.getLocationsList();
       assertEquals(expected, actual);
+    }
+
+    @Test
+    public void switchesLocations() {
+      Assertions.assertAll(() -> page.switchLocations());
     }
 
     @Test

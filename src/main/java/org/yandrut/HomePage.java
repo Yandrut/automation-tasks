@@ -14,10 +14,6 @@ public class HomePage {
         this.driver = driver;
     }
 
-    public static void main(String[] args) {
-        // invoking methods
-    }
-
     public String getTitle() {
         return driver.getTitle();
     }
@@ -43,8 +39,15 @@ public class HomePage {
     }
 
     public List<String> getLocationsList() {
-        List <WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper open']//a"));
-        return locations.stream().map(WebElement::getText).collect(Collectors.toList());
+        List <WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper']//a"));
+            return locations.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+    public void switchLocations() {
+        List <WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__title js-tabs-title']"));
+        for (WebElement element : locations) {
+            System.out.println(element.getText());
+            element.click();
+        }
     }
 
     public boolean isResultPresent() {
