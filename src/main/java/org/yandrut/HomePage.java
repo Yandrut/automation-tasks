@@ -66,4 +66,18 @@ public class HomePage {
         String noResultsPresent = "search-results__counter hidden";
         return (!searchResult.getAttribute("class").equals(noResultsPresent));
     }
+
+    public boolean requiredFieldsValidated() {
+        int flag = 0;
+        List<WebElement> requiredList = driver.findElements(By.xpath("//input[@aria-required='true']"));
+        WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
+        submit.click();
+        for (WebElement input : requiredList) {
+            String validator = input.getAttribute("aria-invalid");
+            if (validator.equals("true")) {
+                flag++;
+            }
+        }
+        return flag == requiredList.size();
+    }
 }

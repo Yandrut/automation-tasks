@@ -75,4 +75,9 @@ public class EpamUiTesting {
     public void searchResultsDisplayed() {
       assertTrue(page.isResultPresent());
     }
+    
+    @Test 
+    public void fieldsValidated() {
+      assertTrue(page.requiredFieldsValidated());
+    }
 }
