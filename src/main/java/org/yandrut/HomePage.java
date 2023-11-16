@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class HomePage {
     WebDriver driver;
 
-    public HomePage (WebDriver driver) {
+    public HomePage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -34,19 +34,20 @@ public class HomePage {
     }
 
     public List<String> getPoliciesList() {
-         List <WebElement> policies = driver.findElements(By.xpath("//div[@class='policies']//a"));
+        List<WebElement> policies = driver.findElements(By.xpath("//div[@class='policies']//a"));
         return policies.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public List<String> getLocationsList() {
-        List <WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper']//a"));
-            return locations.stream().map(WebElement::getText).collect(Collectors.toList());
+        List<WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper']//a"));
+        return locations.stream().map(WebElement::getText).collect(Collectors.toList());
     }
+
     public void switchLocations() {
         // List <WebElement> locations = driver.findElements(By.xpath("//a[@aria-selected='false']"));
         // List <WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__title js-tabs-title']"));
         // List <WebElement> locations = driver.findElements(By.xpath("//a[@aria-selected='false']/.."));
-        List <WebElement> locations = driver.findElements(By.cssSelector(".tabs-23__link.js-tabs-link:not(.active)"));
+        List<WebElement> locations = driver.findElements(By.cssSelector(".tabs-23__link.js-tabs-link:not(.active)"));
 
         for (WebElement location : locations) {
             System.out.println(location.getText());
@@ -68,9 +69,15 @@ public class HomePage {
     }
 
     public boolean requiredFieldsValidated() {
+        driver.get("https://www.epam.com/about/who-we-are/contact");
+
         int flag = 0;
         List<WebElement> requiredList = driver.findElements(By.xpath("//input[@aria-required='true']"));
-        WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
+
+        // WebElement submit = driver.findElement(By.xpath("//button[@class='button-ui']/.."));
+        // WebElement submit = driver.findElement(By.xpath("//button[@class='button-ui']"));
+
+        WebElement submit = driver.findElement(By.cssSelector("button.button-ui"));
         submit.click();
         for (WebElement input : requiredList) {
             String validator = input.getAttribute("aria-invalid");
