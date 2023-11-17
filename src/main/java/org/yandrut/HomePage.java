@@ -33,9 +33,11 @@ public class HomePage {
     }
 
     public String getUkrainianTitle() {
-        WebElement languageOptions = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[2]/div[1]/header/div/div/ul/li[2]/div/div/button"));
+        WebElement languageOptions = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/div/button"));
+        wait.until(ExpectedConditions.elementToBeClickable(languageOptions));
         languageOptions.click();
-        WebElement selector = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[2]/div[1]/header/div/div/ul/li[2]/div/nav/ul/li[6]/a"));
+        WebElement selector = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/nav/ul/li[6]/a"));
+        wait.until(ExpectedConditions.elementToBeClickable(selector));
         selector.click();
         return driver.getTitle();
     }
@@ -51,18 +53,13 @@ public class HomePage {
     }
 
     public void switchLocations() {
-        // List <WebElement> locations = driver.findElements(By.xpath("//a[@aria-selected='false']"));
-        // List <WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__title js-tabs-title']"));
-        // List <WebElement> locations = driver.findElements(By.xpath("//a[@aria-selected='false']/.."));
         List<WebElement> locations = driver.findElements(By.cssSelector(".tabs-23__link.js-tabs-link:not(.active)"));
-
 
         for (WebElement location : locations) {
             System.out.println(location.getText());
             wait.until(ExpectedConditions.elementToBeClickable(location));
             location.click();
         }
-
     }
 
     public boolean isResultPresent() {
