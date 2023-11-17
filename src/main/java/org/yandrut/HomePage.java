@@ -4,14 +4,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomePage {
     WebDriver driver;
+    WebDriverWait wait;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public String getTitle() {
@@ -20,6 +26,7 @@ public class HomePage {
 
     public String getBackgroundColourAttribute() {
         WebElement colorSwitch = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[2]/div[1]/header/div/div/section/div"));
+        wait.until(ExpectedConditions.elementToBeClickable(colorSwitch));
         colorSwitch.click();
         WebElement body = driver.findElement(By.xpath("/html/body"));
         return body.getAttribute("class");
@@ -49,8 +56,10 @@ public class HomePage {
         // List <WebElement> locations = driver.findElements(By.xpath("//a[@aria-selected='false']/.."));
         List<WebElement> locations = driver.findElements(By.cssSelector(".tabs-23__link.js-tabs-link:not(.active)"));
 
+
         for (WebElement location : locations) {
             System.out.println(location.getText());
+            wait.until(ExpectedConditions.elementToBeClickable(location));
             location.click();
         }
 
@@ -70,15 +79,13 @@ public class HomePage {
 
     public boolean requiredFieldsValidated() {
         driver.get("https://www.epam.com/about/who-we-are/contact");
-
         int flag = 0;
         List<WebElement> requiredList = driver.findElements(By.xpath("//input[@aria-required='true']"));
 
-        // WebElement submit = driver.findElement(By.xpath("//button[@class='button-ui']/.."));
-        // WebElement submit = driver.findElement(By.xpath("//button[@class='button-ui']"));
+        WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
 
-        WebElement submit = driver.findElement(By.cssSelector("button.button-ui"));
-        submit.click();
+        wait.until(ExpectedConditions.elementToBeClickable(submit));
+        submit.submit();
         for (WebElement input : requiredList) {
             String validator = input.getAttribute("aria-invalid");
             if (validator.equals("true")) {
@@ -86,5 +93,13 @@ public class HomePage {
             }
         }
         return flag == requiredList.size();
+    }
+
+    public String getLogoClickUrl() {
+        driver.get("https://www.epam.com/about");
+        WebElement logo = driver.findElement(By.xpath("//img[@class='header__logo header__logo-placeholder']/.."));
+        wait.until(ExpectedConditions.elementToBeClickable(logo));
+        logo.click();
+        return driver.getCurrentUrl();
     }
 }

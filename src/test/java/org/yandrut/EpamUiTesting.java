@@ -80,4 +80,11 @@ public class EpamUiTesting {
     public void fieldsValidated() {
       assertTrue(page.requiredFieldsValidated());
     }
+
+    @Test
+    public void logoClickUrlMatches() {
+      String expected = "https://www.epam.com/";
+      String actual = page.getLogoClickUrl();
+      assertEquals(expected, actual);
+    }
 }

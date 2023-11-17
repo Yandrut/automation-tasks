@@ -11,6 +11,7 @@
                     <include name="policiesItemsPresent"/>
                     <include name="searchResultsDisplayed"/>
                     <include name="fieldsValidated"/>
+                    <include name="logoClickUrlMatches"/>
                 </methods>
             </class>
         </classes>
