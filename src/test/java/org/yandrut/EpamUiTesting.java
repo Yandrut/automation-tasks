@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import selenium.DriverProvider;
+import selenium.pages.HomePage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,21 +14,17 @@ import java.util.List;
 import static junit.framework.Assert.*;
 
 public class EpamUiTesting {
-    public HomePage page;
-    public WebDriver driver;
+    HomePage page = new HomePage(DriverProvider.getInstance());
 
-          // invoking methods
-  @BeforeMethod
+    @BeforeMethod
     public void openBrowser() {
-        driver = DriverFactory.getInstance();
-        page = new HomePage(driver);
+        WebDriver driver = DriverProvider.getInstance();
         driver.get("https://epam.com");
-        driver.manage().window().maximize();
     }
 
     @AfterMethod
     public void closeBrowser() {
-        DriverFactory.closeBrowser();
+        DriverProvider.quit();
     }
 
     @Test
@@ -83,6 +81,8 @@ public class EpamUiTesting {
 
     @Test
     public void logoClickUrlMatches() {
+        page.openURL("https://www.epam.com/about");
+
       String expected = "https://www.epam.com/";
       String actual = page.getLogoClickUrl();
       assertEquals(expected, actual);

@@ -1,23 +1,19 @@
-package org.yandrut;
+package selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import selenium.DriverWaiter;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomePage {
-    WebDriver driver;
-    WebDriverWait wait;
+    private final WebDriver driver;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public String getTitle() {
@@ -26,18 +22,17 @@ public class HomePage {
 
     public String getBackgroundColourAttribute() {
         WebElement colorSwitch = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[2]/div[1]/header/div/div/section/div"));
-        wait.until(ExpectedConditions.elementToBeClickable(colorSwitch));
+        DriverWaiter.waitForElementToBeClickable(colorSwitch);
         colorSwitch.click();
-        WebElement body = driver.findElement(By.xpath("/html/body"));
-        return body.getAttribute("class");
+        return driver.findElement(By.xpath("/html/body")).getAttribute("class");
     }
 
     public String getUkrainianTitle() {
         WebElement languageOptions = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/div/button"));
-        wait.until(ExpectedConditions.elementToBeClickable(languageOptions));
+        DriverWaiter.waitForElementToBeClickable(languageOptions);
         languageOptions.click();
         WebElement selector = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/nav/ul/li[6]/a"));
-        wait.until(ExpectedConditions.elementToBeClickable(selector));
+        DriverWaiter.waitForElementToBeClickable(selector);
         selector.click();
         return driver.getTitle();
     }
@@ -57,7 +52,7 @@ public class HomePage {
 
         for (WebElement location : locations) {
             System.out.println(location.getText());
-            wait.until(ExpectedConditions.elementToBeClickable(location));
+            DriverWaiter.waitForElementToBeClickable(location);
             location.click();
         }
     }
@@ -81,7 +76,7 @@ public class HomePage {
 
         WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
 
-        wait.until(ExpectedConditions.elementToBeClickable(submit));
+        DriverWaiter.waitForElementToBeClickable(submit);
         submit.submit();
         for (WebElement input : requiredList) {
             String validator = input.getAttribute("aria-invalid");
@@ -92,10 +87,12 @@ public class HomePage {
         return flag == requiredList.size();
     }
 
+    public void openURL (String url) {
+        driver.get(url);
+    }
     public String getLogoClickUrl() {
-        driver.get("https://www.epam.com/about");
         WebElement logo = driver.findElement(By.xpath("//img[@class='header__logo header__logo-placeholder']/.."));
-        wait.until(ExpectedConditions.elementToBeClickable(logo));
+        DriverWaiter.waitForElementToBeClickable(logo);
         logo.click();
         return driver.getCurrentUrl();
     }
