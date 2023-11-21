@@ -8,11 +8,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import java.time.Duration;
 
 public class DriverFactory {
-    private static WebDriver driver;
 
     private DriverFactory() {}
 
     public static WebDriver getDriver(String driverName) {
+        WebDriver driver;
         if (driverName.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver();
         } else if (driverName.equalsIgnoreCase("firefox")) {
@@ -27,14 +27,4 @@ public class DriverFactory {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver;
     }
-
-//
-//    public static WebDriver getInstance() {
-//          if (driver == null) {
-//              System.setProperty("webdriver.chrome.driver",
-//                      "/home/digital/Завантаження/chromedriver_linux64/chromedriver");
-//              driver = new ChromeDriver();
-//        }
-//        return driver;
-//    }
 }

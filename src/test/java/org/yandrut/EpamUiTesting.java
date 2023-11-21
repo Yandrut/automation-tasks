@@ -1,34 +1,20 @@
 package org.yandrut;
 
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import selenium.DriverProvider;
 import selenium.pages.HomePage;
-
 import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.*;
 
-public class EpamUiTesting {
-    HomePage page = new HomePage(DriverProvider.getInstance());
+public class EpamUiTesting extends BaseTest {
 
-    @BeforeMethod
-    public void openBrowser() {
-        WebDriver driver = DriverProvider.getInstance();
-        driver.get("https://epam.com");
-    }
-
-    @AfterMethod
-    public void closeBrowser() {
-        DriverProvider.quit();
-    }
 
     @Test
     public void titleComparison() {
+        HomePage page = new HomePage(DriverProvider.getInstance());
         String actual = page.getTitle();
         String expected = "EPAM | Software Engineering & Product Development Services";
         assertEquals(expected, actual);
@@ -36,6 +22,7 @@ public class EpamUiTesting {
 
     @Test
     public void lightThemeChanged() {
+        HomePage page = new HomePage(DriverProvider.getInstance());
         String expected = "fonts-loaded header--anima148ted dark-mode";
         String actual = page.getBackgroundColourAttribute();
         assertNotSame(expected, actual);
@@ -43,6 +30,7 @@ public class EpamUiTesting {
 
     @Test
     public void languageChanged() {
+        HomePage page = new HomePage(DriverProvider.getInstance());
         String expected = "EPAM Ukraine - найбільша ІТ-компанія в Україні | Вакансії";
         String actual = page.getUkrainianTitle();
         assertEquals(expected, actual);
@@ -50,6 +38,7 @@ public class EpamUiTesting {
 
     @Test
     public void policiesItemsPresent() {
+        HomePage page = new HomePage(DriverProvider.getInstance());
         List<String> expected = Arrays.asList("INVESTORS",
                 "OPEN SOURCE", "PRIVACY POLICY", "COOKIE POLICY",
                 "APPLICANT PRIVACY NOTICE", "WEB ACCESSIBILITY");
@@ -59,6 +48,7 @@ public class EpamUiTesting {
 
     @Test
     public void locationsItemsPresent() {
+        HomePage page = new HomePage(DriverProvider.getInstance());
       List <String> expected = Arrays.asList("AMERICAS", "EMEA", "APAC");
       List <String> actual = page.getLocationsList();
       assertEquals(expected, actual);
@@ -66,21 +56,25 @@ public class EpamUiTesting {
 
     @Test
     public void switchesLocations() {
-      Assertions.assertAll(() -> page.switchLocations());
+        HomePage page = new HomePage(DriverProvider.getInstance());
+        Assertions.assertAll(page::switchLocations);
     }
 
     @Test
     public void searchResultsDisplayed() {
-      assertTrue(page.isResultPresent());
+        HomePage page = new HomePage(DriverProvider.getInstance());
+        assertTrue(page.isResultPresent());
     }
     
     @Test 
     public void fieldsValidated() {
+        HomePage page = new HomePage(DriverProvider.getInstance());
       assertTrue(page.requiredFieldsValidated());
     }
 
     @Test
     public void logoClickUrlMatches() {
+        HomePage page = new HomePage(DriverProvider.getInstance());
         page.openURL("https://www.epam.com/about");
 
       String expected = "https://www.epam.com/";

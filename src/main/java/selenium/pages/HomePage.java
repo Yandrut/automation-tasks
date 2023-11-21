@@ -90,6 +90,7 @@ public class HomePage {
     public void openURL (String url) {
         driver.get(url);
     }
+
     public String getLogoClickUrl() {
         WebElement logo = driver.findElement(By.xpath("//img[@class='header__logo header__logo-placeholder']/.."));
         DriverWaiter.waitForElementToBeClickable(logo);
