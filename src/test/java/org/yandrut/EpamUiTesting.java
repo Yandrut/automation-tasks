@@ -56,16 +56,17 @@ public class EpamUiTesting extends BaseTest {
     @Test
     public void locationsItemsPresent() {
         HomePage page = new HomePage(DriverProvider.getInstance());
-      List <String> expected = Arrays.asList("AMERICAS", "EMEA", "APAC");
-      List <String> actual = page.getLocationsList();
+        List<WebElement> locations = page.getLocationsList();
+        List <String> expected = Arrays.asList("AMERICAS", "EMEA", "APAC");
+        List <String> actual = page.getTextOfLocationsList(locations);
       assertEquals(expected, actual);
     }
 
     @Test
     public void switchesLocations() {
-        // not done
         HomePage page = new HomePage(DriverProvider.getInstance());
-        Assertions.assertAll(page::switchLocations);
+        List<WebElement> locations = page.getLocationsList();
+        Assertions.assertAll(() -> page.switchLocations(locations));
     }
 
     @Test
@@ -88,7 +89,7 @@ public class EpamUiTesting extends BaseTest {
     }
 
     @Test
-    public void logoClickUrlMatches() {
+    public void logoUrlMatches() {
         AboutPage page = new AboutPage(DriverProvider.getInstance());
         page.openURL("https://www.epam.com/about");
         page.clickOnLogo();

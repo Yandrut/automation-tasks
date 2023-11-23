@@ -52,13 +52,16 @@ public class HomePage {
         return policies.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
-    public List<String> getLocationsList() {
-        List<WebElement> locations = driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper']//a"));
+    public List<WebElement> getLocationsList() {
+        return driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper']//a"));
+    }
+
+    public List<String> getTextOfLocationsList(List<WebElement> locations) {
         return locations.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
-    public void switchLocations() {
-        List<WebElement> locations = driver.findElements(By.cssSelector(".tabs-23__link.js-tabs-link:not(.active)"));
+    public void switchLocations(List <WebElement> locations) {
+        locations.remove(0);
 
         for (WebElement location : locations) {
             waitForElementToBeClickable(location);
@@ -67,7 +70,7 @@ public class HomePage {
         }
     }
 
-    public void clickOnSearchBar () {
+    public void clickOnSearchBar() {
         driver.findElement(By.xpath("//div[@class='header-search-ui header-search-ui-23 header__control']"))
                 .click();
         logger.info("Search bar");
