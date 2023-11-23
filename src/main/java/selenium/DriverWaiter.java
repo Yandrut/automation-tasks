@@ -8,12 +8,12 @@ import java.time.Duration;
 public class DriverWaiter {
 
     public static void waitForElementToBeClickable(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(DriverProvider.getInstance(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(DriverProvider.getInstance(), Duration.ofSeconds(10L));
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public static void waitForElementToBeVisible(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(DriverProvider.getInstance(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(DriverProvider.getInstance(), Duration.ofSeconds(10L));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 }

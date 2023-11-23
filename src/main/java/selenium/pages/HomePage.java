@@ -4,12 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import selenium.DriverWaiter;
+import org.apache.logging.log4j.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static selenium.DriverWaiter.waitForElementToBeClickable;
+
 public class HomePage {
+    private static final Logger logger = LogManager.getLogger(HomePage.class);
     private final WebDriver driver;
 
     public HomePage(WebDriver driver) {
@@ -17,24 +20,31 @@ public class HomePage {
     }
 
     public String getTitle() {
+        logger.info("Title of website: " + driver.getTitle());
         return driver.getTitle();
+    }
+
+    public void clickOnColourSwitch() {
+        WebElement colorSwitch = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/section/div"));
+        logger.info("color switch founded");
+        waitForElementToBeClickable(colorSwitch);
+        colorSwitch.click();
     }
 
     public String getBackgroundColourAttribute() {
-        WebElement colorSwitch = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[2]/div[1]/header/div/div/section/div"));
-        DriverWaiter.waitForElementToBeClickable(colorSwitch);
-        colorSwitch.click();
         return driver.findElement(By.xpath("/html/body")).getAttribute("class");
     }
 
-    public String getUkrainianTitle() {
+    public void clickOnLanguageOptions() {
         WebElement languageOptions = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/div/button"));
-        DriverWaiter.waitForElementToBeClickable(languageOptions);
+        waitForElementToBeClickable(languageOptions);
         languageOptions.click();
+    }
+
+    public void clickOnLanguageSelector() {
         WebElement selector = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/nav/ul/li[6]/a"));
-        DriverWaiter.waitForElementToBeClickable(selector);
+        waitForElementToBeClickable(selector);
         selector.click();
-        return driver.getTitle();
     }
 
     public List<String> getPoliciesList() {
@@ -51,50 +61,26 @@ public class HomePage {
         List<WebElement> locations = driver.findElements(By.cssSelector(".tabs-23__link.js-tabs-link:not(.active)"));
 
         for (WebElement location : locations) {
-            System.out.println(location.getText());
-            DriverWaiter.waitForElementToBeClickable(location);
+            waitForElementToBeClickable(location);
+            logger.info("Location: " + location.getText());
             location.click();
         }
     }
 
-    public boolean isResultPresent() {
-        WebElement searchIcon = driver.findElement(By.xpath("//div[@class='header-search-ui header-search-ui-23 header__control']"));
-        searchIcon.click();
-        WebElement input = driver.findElement(By.xpath("//input[@id='new_form_search']"));
-        input.sendKeys("AI", Keys.ENTER);
-        WebElement searchResult = driver.findElement(By.xpath("//h2[@tabindex='0']"));
-
-        //if attribute contains "hidden", no results are displayed
-        String noResultsPresent = "search-results__counter hidden";
-        return (!searchResult.getAttribute("class").equals(noResultsPresent));
+    public void clickOnSearchBar () {
+        driver.findElement(By.xpath("//div[@class='header-search-ui header-search-ui-23 header__control']"))
+                .click();
+        logger.info("Search bar");
     }
 
-    public boolean requiredFieldsValidated() {
-        driver.get("https://www.epam.com/about/who-we-are/contact");
-        int flag = 0;
-        List<WebElement> requiredList = driver.findElements(By.xpath("//input[@aria-required='true']"));
-
-        WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
-
-        DriverWaiter.waitForElementToBeClickable(submit);
-        submit.submit();
-        for (WebElement input : requiredList) {
-            String validator = input.getAttribute("aria-invalid");
-            if (validator.equals("true")) {
-                flag++;
-            }
-        }
-        return flag == requiredList.size();
+    public void sendKeysToInput(String keysToSend) {
+        driver.findElement(By.xpath("//input[@id='new_form_search']"))
+                .sendKeys(keysToSend,Keys.ENTER);
+        logger.info("Keys sent: " + keysToSend);
     }
 
-    public void openURL (String url) {
-        driver.get(url);
-    }
-
-    public String getLogoClickUrl() {
-        WebElement logo = driver.findElement(By.xpath("//img[@class='header__logo header__logo-placeholder']/.."));
-        DriverWaiter.waitForElementToBeClickable(logo);
-        logo.click();
-        return driver.getCurrentUrl();
+    public String getSearchResultAttributeValue() {
+        return driver.findElement(By.xpath("//h2[@tabindex='0']"))
+                .getAttribute("class");
     }
 }
