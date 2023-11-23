@@ -29,7 +29,7 @@ public class ContactPage {
     }
 
     public void clickOnSubmitButton() {
-        logger.info("Submit inputs");
+        logger.info("Click on submit button");
         WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
         waitForElementToBeClickable(submit);
         submit.submit();
