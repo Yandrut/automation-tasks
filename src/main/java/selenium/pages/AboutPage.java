@@ -17,17 +17,19 @@ public class AboutPage {
     }
 
     public void openURL (String url) {
-        logger.info("Open URL");
+        logger.info("Open URL: " + url);
         driver.get(url);
     }
 
     public void clickOnLogo() {
+        logger.info("Click on logo");
         WebElement logo = driver.findElement(By.xpath("//img[@class='header__logo header__logo-placeholder']/.."));
         waitForElementToBeClickable(logo);
         logo.click();
     }
 
     public String getCurrentUrl() {
+        logger.info("Get current URL");
         return driver.getCurrentUrl();
     }
 }

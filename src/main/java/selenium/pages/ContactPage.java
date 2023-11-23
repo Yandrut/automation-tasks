@@ -19,7 +19,7 @@ public class ContactPage {
     }
 
     public void openURL (String url) {
-        logger.info("Open URL");
+        logger.info("Open URL: " + url);
         driver.get(url);
     }
 
@@ -28,7 +28,7 @@ public class ContactPage {
         return driver.findElements(By.xpath("//input[@aria-required='true']"));
     }
 
-    public void submitInputs() {
+    public void clickOnSubmitButton() {
         logger.info("Submit inputs");
         WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
         waitForElementToBeClickable(submit);
@@ -36,6 +36,7 @@ public class ContactPage {
     }
 
     public boolean areFieldsValidated(List<WebElement> requiredFields) {
+        logger.info("Are fields validated");
         int flag = 0;
         for (WebElement input : requiredFields) {
             String validator = input.getAttribute("aria-invalid");

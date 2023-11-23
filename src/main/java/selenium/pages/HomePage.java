@@ -20,47 +20,54 @@ public class HomePage {
     }
 
     public String getTitle() {
-        logger.info("Title of website: " + driver.getTitle());
+        logger.info("Get title");
         return driver.getTitle();
     }
 
     public void clickOnColourSwitch() {
+        logger.info("Click on colour switch");
         WebElement colorSwitch = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/section/div"));
-        logger.info("color switch founded");
         waitForElementToBeClickable(colorSwitch);
         colorSwitch.click();
     }
 
     public String getBackgroundColourAttribute() {
+        logger.info("Get background colour attribute");
         return driver.findElement(By.xpath("/html/body")).getAttribute("class");
     }
 
     public void clickOnLanguageOptions() {
+        logger.info("Click on language options");
         WebElement languageOptions = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/div/button"));
         waitForElementToBeClickable(languageOptions);
         languageOptions.click();
     }
 
     public void clickOnLanguageSelector() {
+        logger.info("Click on language selector");
         WebElement selector = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/nav/ul/li[6]/a"));
         waitForElementToBeClickable(selector);
         selector.click();
     }
 
     public List<String> getPoliciesList() {
+        logger.info("Get policies list");
         List<WebElement> policies = driver.findElements(By.xpath("//div[@class='policies']//a"));
         return policies.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public List<WebElement> getLocationsList() {
+        logger.info("Get locations list");
         return driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper']//a"));
     }
 
     public List<String> getTextOfLocationsList(List<WebElement> locations) {
+        logger.info("Get text of locations list");
         return locations.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public void switchLocations(List <WebElement> locations) {
+        logger.info("Switch locations");
         locations.remove(0);
 
         for (WebElement location : locations) {
@@ -71,18 +78,21 @@ public class HomePage {
     }
 
     public void clickOnSearchBar() {
+        logger.info("Click on search bar");
+
         driver.findElement(By.xpath("//div[@class='header-search-ui header-search-ui-23 header__control']"))
                 .click();
-        logger.info("Search bar");
     }
 
     public void sendKeysToInput(String keysToSend) {
+        logger.info("Send keys to input");
         driver.findElement(By.xpath("//input[@id='new_form_search']"))
                 .sendKeys(keysToSend,Keys.ENTER);
         logger.info("Keys sent: " + keysToSend);
     }
 
     public String getSearchResultAttributeValue() {
+        logger.info("Get search result attribute value");
         return driver.findElement(By.xpath("//h2[@tabindex='0']"))
                 .getAttribute("class");
     }

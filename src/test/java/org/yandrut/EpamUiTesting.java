@@ -84,7 +84,7 @@ public class EpamUiTesting extends BaseTest {
         ContactPage page = new ContactPage(DriverProvider.getInstance());
         page.openURL("https://www.epam.com/about/who-we-are/contact");
         List <WebElement> required = page.getRequiredList();
-        page.submitInputs();
+        page.clickOnSubmitButton();
       assertTrue(page.areFieldsValidated(required));
     }
 
