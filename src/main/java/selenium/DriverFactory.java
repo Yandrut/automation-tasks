@@ -2,6 +2,7 @@ package selenium;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
@@ -13,8 +14,16 @@ public class DriverFactory {
 
     public static WebDriver getDriver(String driverName) {
         WebDriver driver;
+
         if (driverName.equalsIgnoreCase("chrome")) {
-            driver = new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--disable-notifications");
+                options.addArguments("--disable-popup-blocking");
+                options.addArguments("disable-infobars");
+                String downloadPath = "/home/digital/Завантаження";
+                options.addArguments("download.default_directory=" + downloadPath);
+
+                driver = new ChromeDriver(options);
         } else if (driverName.equalsIgnoreCase("firefox")) {
             driver = new FirefoxDriver();
         } else if (driverName.equalsIgnoreCase("edge")) {

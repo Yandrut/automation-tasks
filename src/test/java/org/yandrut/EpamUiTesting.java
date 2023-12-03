@@ -56,7 +56,7 @@ public class EpamUiTesting extends BaseTest {
     @Test
     public void locationsItemsPresent() {
         HomePage page = new HomePage(DriverProvider.getInstance());
-        List<WebElement> locations = page.getLocationsList();
+        List<WebElement> locations = page.getLocationsList("div.tabs-23__ul-wrapper a");
         List <String> expected = Arrays.asList("AMERICAS", "EMEA", "APAC");
         List <String> actual = page.getTextOfLocationsList(locations);
       assertEquals(expected, actual);
@@ -65,7 +65,7 @@ public class EpamUiTesting extends BaseTest {
     @Test
     public void switchesLocations() {
         HomePage page = new HomePage(DriverProvider.getInstance());
-        List<WebElement> locations = page.getLocationsList();
+        List<WebElement> locations = page.getLocationsList("tabs-23__title.js-tabs-title:not(.active)");
         Assertions.assertAll(() -> page.switchLocations(locations));
     }
 
@@ -96,5 +96,16 @@ public class EpamUiTesting extends BaseTest {
       String expected = "https://www.epam.com/";
       String actual = page.getCurrentUrl();
       assertEquals(expected, actual);
+    }
+
+    @Test
+    public void requiredFilePresent() {
+        AboutPage page = new AboutPage(DriverProvider.getInstance());
+        page.openURL("https://www.epam.com/about");
+        page.clickOnDownloadButton();
+        String filePath = "/home/digital/Завантаження/EPAM_Corporate_Overview_Q3_october.pdf";
+        page.waitForFileToBeDownloaded(filePath);
+        boolean isFilePresent = page.isFileDownloaded(filePath);
+        assertTrue(isFilePresent);
     }
 }

@@ -56,9 +56,9 @@ public class HomePage {
         return policies.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
-    public List<WebElement> getLocationsList() {
+    public List<WebElement> getLocationsList(String cssSelector) {
         logger.info("Get locations list");
-        return driver.findElements(By.xpath("//div[@class='tabs-23__ul-wrapper']//a"));
+        return driver.findElements(By.cssSelector(cssSelector));
     }
 
     public List<String> getTextOfLocationsList(List<WebElement> locations) {
@@ -68,7 +68,6 @@ public class HomePage {
 
     public void switchLocations(List <WebElement> locations) {
         logger.info("Switch locations");
-        locations.remove(0);
 
         for (WebElement location : locations) {
             waitForElementToBeClickable(location);
@@ -85,10 +84,10 @@ public class HomePage {
     }
 
     public void sendKeysToInput(String keysToSend) {
-        logger.info("Send keys to input");
+        logger.info("Send keys to input" + keysToSend);
+
         driver.findElement(By.xpath("//input[@id='new_form_search']"))
                 .sendKeys(keysToSend,Keys.ENTER);
-        logger.info("Keys sent: " + keysToSend);
     }
 
     public String getSearchResultAttributeValue() {

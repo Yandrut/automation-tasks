@@ -16,4 +16,9 @@ public class DriverWaiter {
         WebDriverWait wait = new WebDriverWait(DriverProvider.getInstance(), Duration.ofSeconds(10L));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
+
+    public static void waitForElementToBeInvisible(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(DriverProvider.getInstance(), Duration.ofSeconds(10L));
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
 }

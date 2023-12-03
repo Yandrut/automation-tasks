@@ -12,6 +12,7 @@
                     <include name="searchResultsDisplayed"/>
                     <include name="fieldsValidated"/>
                     <include name="logoUrlMatches"/>
+                    <include name="requiredFilePresent"/>
                 </methods>
             </class>
         </classes>
