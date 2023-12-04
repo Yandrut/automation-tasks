@@ -7,6 +7,8 @@ import selenium.DriverProvider;
 import selenium.pages.AboutPage;
 import selenium.pages.ContactPage;
 import selenium.pages.HomePage;
+
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -104,8 +106,7 @@ public class EpamUiTesting extends BaseTest {
         page.openURL("https://www.epam.com/about");
         page.clickOnDownloadButton();
         String filePath = "/home/digital/Завантаження/EPAM_Corporate_Overview_Q3_october.pdf";
-        page.waitForFileToBeDownloaded(filePath);
-        boolean isFilePresent = page.isFileDownloaded(filePath);
+        boolean isFilePresent = page.isFileDownloadedWithTimeout(filePath, Duration.ofSeconds(10));
         assertTrue(isFilePresent);
     }
 }

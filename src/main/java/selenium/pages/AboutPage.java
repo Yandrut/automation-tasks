@@ -46,17 +46,19 @@ public class AboutPage {
         downloadButton.click();
     }
 
-    public void waitForFileToBeDownloaded(String filePath) {
+    public boolean isFileDownloadedWithTimeout(String filePath, Duration duration) {
         logger.info("Wait for file to be downloaded");
 
         try {
             Awaitility.await("Wait until file is downloaded")
-                    .atMost(Duration.ofSeconds(20))
+                    .atMost(duration)
                     .pollInterval(Duration.ofSeconds(2))
                     .until(() -> isFileDownloaded(filePath));
             logger.info("File downloaded successfully");
+            return true;
         } catch (ConditionTimeoutException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
