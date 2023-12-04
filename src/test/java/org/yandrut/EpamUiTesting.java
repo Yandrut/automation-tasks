@@ -36,7 +36,7 @@ public class EpamUiTesting extends BaseTest {
     public void languageChanged() {
         HomePage page = new HomePage(DriverProvider.getInstance());
         page.clickOnLanguageOptions();
-        page.clickOnLanguageSelector();
+        page.switchLanguage("Україна (Українська)");
 
         String expected = "EPAM Ukraine - найбільша ІТ-компанія в Україні | Вакансії";
         String actual = page.getTitle();

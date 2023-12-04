@@ -1,5 +1,6 @@
 package selenium;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,9 +18,9 @@ public class DriverFactory {
 
         if (driverName.equalsIgnoreCase("chrome")) {
                 ChromeOptions options = new ChromeOptions();
+                options.addArguments("start-maximized");
                 options.addArguments("--disable-notifications");
                 options.addArguments("--disable-popup-blocking");
-                options.addArguments("disable-infobars");
                 String downloadPath = "/home/digital/Завантаження";
                 options.addArguments("download.default_directory=" + downloadPath);
 
@@ -32,7 +33,7 @@ public class DriverFactory {
             throw new RuntimeException("Invalid name of the driver");
         }
 
-        driver.manage().window().maximize();
+//        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver;
     }

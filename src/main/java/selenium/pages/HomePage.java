@@ -38,17 +38,24 @@ public class HomePage {
 
     public void clickOnLanguageOptions() {
         logger.info("Click on language options");
-        WebElement languageOptions = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/div/button"));
+        WebElement languageOptions = driver.findElement(By.xpath("//button[@class='location-selector__button']"));
         waitForElementToBeClickable(languageOptions);
         languageOptions.click();
     }
 
-    public void clickOnLanguageSelector() {
-        logger.info("Click on language selector");
-        WebElement selector = driver.findElement(By.xpath("//*[@id='wrapper']/div[2]/div[1]/header/div/div/ul/li[2]/div/nav/ul/li[6]/a"));
-        waitForElementToBeClickable(selector);
-        selector.click();
-    }
+    public void switchLanguage(String language) {
+        logger.info("Switch language to: " + language);
+        List <WebElement> languages = driver.findElements(By.xpath("//a[@lang]"));
+
+            for (WebElement element : languages) {
+                if (element.getText().equalsIgnoreCase(language)) {
+                    logger.info("Text: " + element.getText());
+                    waitForElementToBeClickable(element);
+                    element.click();
+                    break;
+                }
+            }
+        }
 
     public List<String> getPoliciesList() {
         logger.info("Get policies list");

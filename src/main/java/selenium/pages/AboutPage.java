@@ -43,8 +43,6 @@ public class AboutPage {
         Actions action = new Actions(driver);
         WebElement downloadButton = driver.findElement(By.xpath("//*[@id='main']/div[1]/div[5]/section/div[2]/div/div/div[1]/div/div[3]/div/a"));
         action.moveToElement(downloadButton).perform();
-        // click on accept cookies button
-        driver.findElement(By.id("onetrust-accept-btn-handler")).click();
         downloadButton.click();
     }
 
